@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:master_class/card.dart';
-import 'backend.dart';
+import 'backend/DataWorker.dart';
+import 'backend/WidgetOfTask.dart';
 import 'card.dart';
+import 'InputTemplate.dart';
 
 class TasksTemplate extends StatefulWidget{
   @override
@@ -12,7 +13,7 @@ class _TasksTemplate extends State<TasksTemplate>{
   bool isLoad = false;
 
   Widget build(BuildContext context){
-    List listOfStrings = new List();
+    List<Widget> listOfStrings = new List();
     
     void getTasks(){
       if (!isLoad) {
@@ -31,11 +32,11 @@ class _TasksTemplate extends State<TasksTemplate>{
     List<Widget> listOfWidgets = new List<Widget>();
 
     
-    listOfWidgets.add(MyCard("gsdd","dmsds", "dssdsd"));
-      // for(var i in listOfStrings){
-      //   MyCard card = new MyCard("name", "name", "text");
-      //   listOfWidgets.add(card);
-      // }
+    //listOfStrings.add(MyCard("gsdd","dmsds", "dssdsd"));
+    for(WidgetOfTask i in listOfStrings){
+        MyCard card = new MyCard(i.name, i.date, i.descr);
+        listOfWidgets.add(card);
+      }
       ListView myListView = ListView(children:listOfWidgets,);
 
       listOfWidgets.add(
@@ -44,7 +45,7 @@ class _TasksTemplate extends State<TasksTemplate>{
                   setState(() {
                     isLoad = false;
                     getTasks();
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => App()));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => InputTemplate()));
                   });
                 },
                 child: Text("Добавить")
